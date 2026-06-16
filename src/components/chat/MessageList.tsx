@@ -25,11 +25,11 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
   if (messages.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-full min-h-full px-4 text-center">
-        <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-50 mb-4 shadow-sm">
-          <Bot className="h-7 w-7 text-blue-600" />
+        <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-50 dark:bg-violet-500/10 mb-4 shadow-sm">
+          <Bot className="h-7 w-7 text-blue-600 dark:text-violet-400" />
         </div>
-        <p className="text-neutral-900 font-semibold text-lg mb-2">Start a conversation to generate React components</p>
-        <p className="text-neutral-500 text-sm max-w-sm">I can help you create buttons, forms, cards, and more</p>
+        <p className="text-neutral-900 dark:text-neutral-100 font-semibold text-lg mb-2">Start a conversation to generate React components</p>
+        <p className="text-neutral-500 dark:text-neutral-400 text-sm max-w-sm">I can help you create buttons, forms, cards, and more</p>
       </div>
     );
   }
@@ -47,8 +47,8 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
           >
             {message.role === "assistant" && (
               <div className="flex-shrink-0">
-                <div className="w-9 h-9 rounded-lg bg-white border border-neutral-200 shadow-sm flex items-center justify-center">
-                  <Bot className="h-4.5 w-4.5 text-neutral-700" />
+                <div className="w-9 h-9 rounded-lg bg-white dark:bg-white/[0.06] border border-neutral-200 dark:border-white/[0.08] shadow-sm flex items-center justify-center">
+                  <Bot className="h-4.5 w-4.5 text-neutral-700 dark:text-neutral-300" />
                 </div>
               </div>
             )}
@@ -59,9 +59,9 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
             )}>
               <div className={cn(
                 "rounded-xl px-4 py-3",
-                message.role === "user" 
-                  ? "bg-blue-600 text-white shadow-sm" 
-                  : "bg-white text-neutral-900 border border-neutral-200 shadow-sm"
+                message.role === "user"
+                  ? "bg-blue-600 dark:bg-violet-600 text-white shadow-sm"
+                  : "bg-white dark:bg-white/[0.05] text-neutral-900 dark:text-neutral-100 border border-neutral-200 dark:border-white/[0.08] shadow-sm"
               )}>
                 <div className="text-sm">
                   {message.parts ? (
@@ -80,36 +80,36 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                             );
                           case "reasoning":
                             return (
-                              <div key={partIndex} className="mt-3 p-3 bg-white/50 rounded-md border border-neutral-200">
-                                <span className="text-xs font-medium text-neutral-600 block mb-1">Reasoning</span>
-                                <span className="text-sm text-neutral-700">{part.reasoning}</span>
+                              <div key={partIndex} className="mt-3 p-3 bg-white/50 dark:bg-white/[0.04] rounded-md border border-neutral-200 dark:border-white/[0.08]">
+                                <span className="text-xs font-medium text-neutral-600 dark:text-neutral-400 block mb-1">Reasoning</span>
+                                <span className="text-sm text-neutral-700 dark:text-neutral-300">{part.reasoning}</span>
                               </div>
                             );
                           case "tool-invocation":
                             const tool = part.toolInvocation;
                             return (
-                              <div key={partIndex} className="inline-flex items-center gap-2 mt-2 px-3 py-1.5 bg-neutral-50 rounded-lg text-xs border border-neutral-200">
+                              <div key={partIndex} className="inline-flex items-center gap-2 mt-2 px-3 py-1.5 bg-neutral-50 dark:bg-white/[0.05] rounded-lg text-xs border border-neutral-200 dark:border-white/[0.08]">
                                 {tool.state === "result" && tool.result ? (
                                   <>
                                     <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                                    <span className="text-neutral-700">{getToolLabel(tool.toolName)}</span>
+                                    <span className="text-neutral-700 dark:text-neutral-300">{getToolLabel(tool.toolName)}</span>
                                   </>
                                 ) : (
                                   <>
-                                    <Loader2 className="w-3 h-3 animate-spin text-blue-600" />
-                                    <span className="text-neutral-700">{getToolLabel(tool.toolName)}</span>
+                                    <Loader2 className="w-3 h-3 animate-spin text-blue-600 dark:text-violet-400" />
+                                    <span className="text-neutral-700 dark:text-neutral-300">{getToolLabel(tool.toolName)}</span>
                                   </>
                                 )}
                               </div>
                             );
                           case "source":
                             return (
-                              <div key={partIndex} className="mt-2 text-xs text-neutral-500">
+                              <div key={partIndex} className="mt-2 text-xs text-neutral-500 dark:text-neutral-400">
                                 Source: {JSON.stringify(part.source)}
                               </div>
                             );
                           case "step-start":
-                            return partIndex > 0 ? <hr key={partIndex} className="my-3 border-neutral-200" /> : null;
+                            return partIndex > 0 ? <hr key={partIndex} className="my-3 border-neutral-200 dark:border-white/[0.08]" /> : null;
                           default:
                             return null;
                         }
@@ -117,7 +117,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                       {isLoading &&
                         message.role === "assistant" &&
                         messages.indexOf(message) === messages.length - 1 && (
-                          <div className="flex items-center gap-2 mt-3 text-neutral-500">
+                          <div className="flex items-center gap-2 mt-3 text-neutral-500 dark:text-neutral-400">
                             <Loader2 className="h-3 w-3 animate-spin" />
                             <span className="text-sm">Generating...</span>
                           </div>
@@ -132,7 +132,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                   ) : isLoading &&
                     message.role === "assistant" &&
                     messages.indexOf(message) === messages.length - 1 ? (
-                    <div className="flex items-center gap-2 text-neutral-500">
+                    <div className="flex items-center gap-2 text-neutral-500 dark:text-neutral-400">
                       <Loader2 className="h-3 w-3 animate-spin" />
                       <span className="text-sm">Generating...</span>
                     </div>
@@ -143,7 +143,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
             
             {message.role === "user" && (
               <div className="flex-shrink-0">
-                <div className="w-9 h-9 rounded-lg bg-blue-600 shadow-sm flex items-center justify-center">
+                <div className="w-9 h-9 rounded-lg bg-blue-600 dark:bg-violet-600 shadow-sm flex items-center justify-center">
                   <User className="h-4.5 w-4.5 text-white" />
                 </div>
               </div>
